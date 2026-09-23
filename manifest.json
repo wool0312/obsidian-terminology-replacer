@@ -1,0 +1,9 @@
+{
+  "id": "terminology-replacer",
+  "name": "Terminology Replacer",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Replace selected or preceding terminology with configurable literal text.",
+  "author": "Local",
+  "isDesktopOnly": false
+}

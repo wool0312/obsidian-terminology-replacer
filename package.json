@@ -1,0 +1,20 @@
+{
+  "name": "obsidian-terminology-replacer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An Obsidian plugin for explicit terminology replacement.",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc --noEmit --skipLibCheck && node esbuild.config.mjs production",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "esbuild": "^0.25.5",
+    "obsidian": "latest",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

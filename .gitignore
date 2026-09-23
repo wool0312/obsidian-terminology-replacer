@@ -1,0 +1,6 @@
+node_modules/
+main.js
+.grill/
+*.log
+.DS_Store
+.grill/

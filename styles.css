@@ -1,0 +1,19 @@
+.terminology-replacer-dictionary {
+  min-height: 14rem;
+  width: min(100%, 42rem);
+  font-family: var(--font-monospace);
+  resize: vertical;
+}
+
+.terminology-replacer-diagnostics {
+  margin-top: var(--size-4-3);
+  color: var(--text-error);
+}
+
+.terminology-replacer-diagnostics.is-valid {
+  color: var(--text-success);
+}
+
+.terminology-replacer-diagnostics ul {
+  margin-top: var(--size-4-1);
+}
