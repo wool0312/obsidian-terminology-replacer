@@ -2,6 +2,8 @@
 
 一个用于统一 Obsidian 笔记术语的插件。通过命令或自定义快捷键，将选中的术语或光标前的术语替换为你配置的文本，适合中英文术语转换和常用 Markdown 片段输入。
 
+Terminology Replacer replaces selected text or a matching term immediately before the cursor with a configurable replacement in Obsidian. Use it to keep terminology consistent, convert terms between languages, or insert Markdown snippets. Replacements run only when you execute the command or a custom hotkey.
+
 当前代码版本：**0.2.0**。插件声明的最低 Obsidian 版本为 **1.5.0**。
 
 ## 功能
@@ -14,7 +16,20 @@
 - **支持 Markdown**：替换内容可以包含反引号、加粗标记、链接等文本。
 - **兼容旧词典**：自动读取旧版 `术语 => 替换内容` 格式的配置。
 
-## 安装
+## Installation
+
+### Manual installation
+
+Requires Obsidian **1.5.0 or later**, as declared in the plugin manifest.
+
+1. Open the [GitHub Releases page](https://github.com/wool0312/obsidian-terminology-replacer/releases) and choose a release.
+2. Download `main.js`, `manifest.json`, and `styles.css` from its **Assets** section.
+3. Create `<vault>/.obsidian/plugins/terminology-replacer/` and copy the three files into that folder. Replace `<vault>` with your Obsidian vault directory.
+4. Reload Obsidian, then enable **Terminology Replacer** under **Settings → Community plugins**. Turn off Restricted mode if needed.
+
+Use the three release assets for installation. The automatically generated source archives require a build before installation. When updating, replace the same three files and keep `data.json` to retain your dictionary.
+
+### 中文安装说明
 
 1. 打开本仓库的 [Releases 页面](https://github.com/wool0312/obsidian-terminology-replacer/releases)，选择需要的版本。
 2. 在该版本的 **Assets** 中下载以下三个文件：
@@ -34,7 +49,17 @@
 
 其中 `<vault>` 是你的笔记仓库目录。请下载 Release 附件中的三个文件；GitHub 自动提供的 `Source code` 压缩包是源码，需要自行构建后才能安装。
 
-## 使用
+## Usage
+
+### Quick start
+
+1. Open **Settings → Terminology Replacer**.
+2. Each row defines one replacement: enter the original term in the left field (**原术语**) and the replacement text in the right field (**替换内容**). Click **添加新行** to add a row or the trash icon to remove it. Changes are saved automatically.
+3. For example, use the default rule that replaces `内核` with the Markdown text `` `kernel` ``.
+4. In a Markdown editor, select the complete term, or place the cursor immediately after it. Open the command palette and run **Terminology Replacer: 替换当前术语**.
+5. To use a hotkey, find the command under **Settings → Hotkeys** and assign your preferred key combination. No hotkey is assigned by default.
+
+A selection must match a dictionary term exactly. Without a selection, the longest matching suffix on the current line before the cursor is replaced. Matching is case-sensitive and does not check word boundaries or Markdown contexts. Leading and trailing whitespace in both fields is trimmed. Empty rows are ignored, incomplete rows are reported, and the last valid rule wins when a term is duplicated.
 
 ### 配置词典
 
