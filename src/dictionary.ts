@@ -1,5 +1,10 @@
 export const DICTIONARY_SEPARATOR = "=>";
 
+export interface DictionaryEntry {
+  term: string;
+  replacement: string;
+}
+
 export interface DictionaryDiagnostic {
   line: number;
   message: string;
@@ -12,26 +17,48 @@ export interface ParsedDictionary {
 }
 
 export function parseDictionary(source: string): ParsedDictionary {
+  const rows = source.split(/\r?\n/u).map((rawLine) => {
+    if (rawLine.trim().length === 0) {
+      return null;
+    }
+    const separatorIndex = rawLine.indexOf(DICTIONARY_SEPARATOR);
+    if (separatorIndex < 0) {
+      return { message: `缺少分隔符 ${DICTIONARY_SEPARATOR}` };
+    }
+    return {
+      term: rawLine.slice(0, separatorIndex),
+      replacement: rawLine.slice(separatorIndex + DICTIONARY_SEPARATOR.length)
+    };
+  });
+  return buildDictionary(rows);
+}
+
+export function parseDictionaryEntries(entries: readonly DictionaryEntry[]): ParsedDictionary {
+  return buildDictionary(entries.map((entry) =>
+    entry.term.trim().length === 0 && entry.replacement.trim().length === 0 ? null : entry
+  ));
+}
+
+function buildDictionary(
+  rows: readonly (DictionaryEntry | { message: string } | null)[]
+): ParsedDictionary {
   const terms = new Map<string, string>();
   const definedAt = new Map<string, number>();
   const diagnostics: DictionaryDiagnostic[] = [];
 
-  source.split(/\r?\n/u).forEach((rawLine, index) => {
+  rows.forEach((row, index) => {
     const line = index + 1;
-    if (rawLine.trim().length === 0) {
+    if (row === null) {
       return;
     }
 
-    const separatorIndex = rawLine.indexOf(DICTIONARY_SEPARATOR);
-    if (separatorIndex < 0) {
-      diagnostics.push({ line, message: `缺少分隔符 ${DICTIONARY_SEPARATOR}` });
+    if ("message" in row) {
+      diagnostics.push({ line, message: row.message });
       return;
     }
 
-    const term = rawLine.slice(0, separatorIndex).trim();
-    const replacement = rawLine
-      .slice(separatorIndex + DICTIONARY_SEPARATOR.length)
-      .trim();
+    const term = row.term.trim();
+    const replacement = row.replacement.trim();
 
     if (term.length === 0) {
       diagnostics.push({ line, message: "术语不能为空" });

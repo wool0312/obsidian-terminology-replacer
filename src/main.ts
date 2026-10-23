@@ -1,15 +1,16 @@
 import { MarkdownView, Notice, Plugin } from "obsidian";
 
-import { findLongestSuffix, parseDictionary, type ParsedDictionary } from "./dictionary";
+import { findLongestSuffix, parseDictionaryEntries, type DictionaryEntry, type ParsedDictionary } from "./dictionary";
+import { TerminologyReplacerSettingTab } from "./settings";
 import {
-  DEFAULT_SETTINGS,
-  TerminologyReplacerSettingTab,
+  loadSettingsData,
   type TerminologyReplacerSettings
-} from "./settings";
+} from "./settings-data";
 
 export default class TerminologyReplacerPlugin extends Plugin {
-  settings: TerminologyReplacerSettings = DEFAULT_SETTINGS;
-  private dictionary: ParsedDictionary = parseDictionary(DEFAULT_SETTINGS.dictionarySource);
+  settings: TerminologyReplacerSettings = loadSettingsData(null);
+  private dictionary: ParsedDictionary = parseDictionaryEntries(this.settings.dictionaryEntries);
+  private saveQueue: Promise<void> = Promise.resolve();
 
   async onload(): Promise<void> {
     await this.loadSettings();
@@ -23,16 +24,19 @@ export default class TerminologyReplacerPlugin extends Plugin {
     this.addSettingTab(new TerminologyReplacerSettingTab(this.app, this));
   }
 
-  async updateDictionary(dictionarySource: string): Promise<void> {
-    this.settings.dictionarySource = dictionarySource;
-    this.dictionary = parseDictionary(dictionarySource);
-    await this.saveData(this.settings);
+  async updateDictionary(entries: readonly DictionaryEntry[]): Promise<void> {
+    const settings = { dictionaryEntries: entries.map((entry) => ({ ...entry })) };
+    this.settings = settings;
+    this.dictionary = parseDictionaryEntries(settings.dictionaryEntries);
+    const save = this.saveQueue.then(() => this.saveData(settings));
+    // A failed write must not block subsequent edits from being saved.
+    this.saveQueue = save.catch(() => {});
+    await save;
   }
 
   private async loadSettings(): Promise<void> {
-    const saved = (await this.loadData()) as Partial<TerminologyReplacerSettings> | null;
-    this.settings = { ...DEFAULT_SETTINGS, ...saved };
-    this.dictionary = parseDictionary(this.settings.dictionarySource);
+    this.settings = loadSettingsData(await this.loadData());
+    this.dictionary = parseDictionaryEntries(this.settings.dictionaryEntries);
   }
 
   private replaceCurrentTerminology(): void {

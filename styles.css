@@ -1,13 +1,114 @@
-.terminology-replacer-dictionary {
-  min-height: 14rem;
-  width: min(100%, 42rem);
+.terminology-replacer-table {
+  --terminology-arrow-width: 1.25rem;
+  --terminology-action-width: 2rem;
+  margin-top: var(--size-4-4);
+  overflow: hidden;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+}
+
+.terminology-replacer-header,
+.terminology-replacer-row .setting-item-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--terminology-arrow-width) minmax(0, 1fr) var(--terminology-action-width);
+  align-items: center;
+  gap: var(--size-4-2);
+  width: 100%;
+}
+
+.terminology-replacer-header {
+  padding: var(--size-4-3);
+  background: var(--background-secondary);
+  border-bottom: 1px solid var(--background-modifier-border);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  font-weight: var(--font-semibold);
+}
+
+.terminology-replacer-header span:last-child {
+  grid-column: 3;
+}
+
+.terminology-replacer-settings .terminology-replacer-row {
+  display: block;
+  margin: 0;
+  padding: var(--size-4-2) var(--size-4-3);
+  border: 0;
+}
+
+.terminology-replacer-settings .terminology-replacer-row + .terminology-replacer-row {
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.terminology-replacer-row:hover {
+  background: var(--background-modifier-hover);
+}
+
+.terminology-replacer-row .setting-item-info,
+.terminology-replacer-actions .setting-item-info {
+  display: none;
+}
+
+.terminology-replacer-row .setting-item-control {
+  padding: 0;
+}
+
+.terminology-replacer-row input.terminology-replacer-field {
+  width: 100%;
+  min-width: 0;
+  height: var(--input-height);
+  background: var(--background-primary);
+}
+
+.terminology-replacer-replacement {
   font-family: var(--font-monospace);
-  resize: vertical;
+}
+
+.terminology-replacer-arrow {
+  text-align: center;
+  color: var(--text-faint);
+}
+
+.terminology-replacer-row .extra-setting-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--terminology-action-width);
+  height: var(--input-height);
+  margin: 0;
+  padding: 0;
+  color: var(--text-muted);
+  border-radius: var(--radius-s);
+}
+
+.terminology-replacer-row .extra-setting-button:hover,
+.terminology-replacer-row .extra-setting-button:focus-visible {
+  color: var(--text-error);
+  background: var(--background-modifier-error-hover);
+}
+
+.terminology-replacer-empty {
+  margin: 0;
+  padding: var(--size-4-6) var(--size-4-3);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+.terminology-replacer-actions .setting-item {
+  padding: var(--size-4-3) 0 0;
+  border: 0;
+}
+
+.terminology-replacer-actions .setting-item-control {
+  justify-content: flex-start;
+  padding: 0;
 }
 
 .terminology-replacer-diagnostics {
   margin-top: var(--size-4-3);
   color: var(--text-error);
+  font-size: var(--font-ui-small);
 }
 
 .terminology-replacer-diagnostics.is-valid {
