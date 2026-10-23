@@ -4,7 +4,7 @@
 
 Terminology Replacer replaces selected text or a matching term immediately before the cursor with a configurable replacement in Obsidian. Use it to keep terminology consistent, convert terms between languages, or insert Markdown snippets. Replacements run only when you execute the command or a custom hotkey.
 
-当前代码版本：**0.2.0**。插件声明的最低 Obsidian 版本为 **1.5.0**。
+当前代码版本：**0.2.1。插件声明的最低 Obsidian 版本为 **1.5.0**。
 
 ## 功能
 
