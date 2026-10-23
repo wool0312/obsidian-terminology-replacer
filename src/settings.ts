@@ -12,11 +12,10 @@ export class TerminologyReplacerSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
     containerEl.addClass("terminology-replacer-settings");
-    containerEl.createEl("h2", { text: "术语词典" });
-    containerEl.createEl("p", {
-      text: "将左侧术语替换为右侧内容，支持 Markdown。修改自动保存。",
-      cls: "setting-item-description"
-    });
+    new Setting(containerEl)
+      .setName("术语词典")
+      .setDesc("将左侧术语替换为右侧内容，支持 Markdown。修改自动保存。")
+      .setHeading();
 
     const entries = this.plugin.settings.dictionaryEntries.map((entry) => ({ ...entry }));
     const tableEl = containerEl.createDiv({ cls: "terminology-replacer-table" });
