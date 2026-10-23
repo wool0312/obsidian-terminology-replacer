@@ -147,3 +147,9 @@ npm run dev
 5. 上传与该版本源码对应的 `main.js`、`manifest.json` 和 `styles.css`，填写发布说明后发布。
 
 `main.js` 是被 Git 忽略的构建产物，需要作为 Release 附件单独上传。
+
+## License
+
+Licensed under the [MIT License](LICENSE). Copyright (c) 2026 wool0312.
+
+本项目采用 [MIT 许可证](LICENSE)，允许使用、修改和再分发（包括商业用途），但需要保留版权及许可证声明。

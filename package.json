@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "description": "An Obsidian plugin for explicit terminology replacement.",
+  "license": "MIT",
   "main": "main.js",
   "type": "module",
   "scripts": {
